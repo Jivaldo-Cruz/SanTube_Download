@@ -1,5 +1,10 @@
 from tkinter import *
-from pytube import YouTube
+import os
+try:
+    from pytube import YouTube
+except ImportError:
+    print("Biblioteca em falta.")
+    os.system("pip install pytube")
 
 #-----------------------------------
 # GUI
