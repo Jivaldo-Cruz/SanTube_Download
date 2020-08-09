@@ -3,16 +3,20 @@ import os
 try:
     from pytube import YouTube
 except ImportError:
-    print("Biblioteca em falta.")
-    os.system("pip install pytube")
+    print("Biblioteca em falta")
+    os.system("pip3 install pytube")
 
 #-----------------------------------
 # GUI
 root = Tk()
 
-class videoDown:
-    def __init__(self):
+class videoDown(Frame):
+    def __init__(self, parent):
+        super().__init__()
+
         self.root = root
+        self.root["bg"] = "#414146"
+        
         self.largura = self.root.winfo_screenwidth()
         self.altura = self.root.winfo_screenheight()
         self.calc_largura = int(self.largura/2) - int(700/2)
@@ -28,8 +32,12 @@ class videoDown:
     #-----------------------------------
     # lógico
     texto = StringVar()
+    resposta = StringVar()
     def download(self):
-        YouTube(self.texto.get()).streams.first().download()
+        if(self.texto.get() == ""):
+            self.resposta.set("Tens que usar url do vídeo que vais baixar!")
+        else:
+             YouTube(self.texto.get()).streams.first().download()
 
     #-----------------------------------
     # widgets
@@ -37,6 +45,8 @@ class videoDown:
         self.label_1 = Label(self.root,
                             text = "Cole o seu link aqui(Ctrl + V):",
                              font = "Verdana 12 bold",
+                             background = "#414146",
+                             fg = "#fff"
                              )
         self.campo = Entry(self.root,
                           width = 60,
@@ -44,18 +54,23 @@ class videoDown:
                           )
         self.btn_1 = Button(self.root,
                             text = "Tranferir",
-                            background = "#414146",
+                            background = "#0f3861",
                             fg = "#fff",
                             width = 10,
                             height = 2,
                             command = lambda: self.download()
                             )
-        self.progresso = Label(self.root)#atualizará
+        self.progresso = Label(self.root,
+                               textvariable = self.resposta,
+                               background = "#414146",
+                               fg = "red"
+                               )#atualizará
 
-        self.label_1.place(relx = 0.35, rely = 0.2)
+        self.label_1.place(relx = 0.30, rely = 0.2)
         self.campo.place(relx = 0.15, rely = 0.3, relheight = 0.1)
         self.btn_1.place(relx = 0.69, rely = 0.45)
+        self.progresso.place(relx = 0.15, rely = 0.45)
 
 #-----------------------------------
 # class
-videoDown()
+videoDown(root)
