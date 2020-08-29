@@ -31,13 +31,17 @@ class videoDown(Frame):
 
     #-----------------------------------
     # lógico
-    texto = StringVar()
     resposta = StringVar()
+    def processo_final(self):
+        self.resposta.set("Download concluído!")
+        
+    texto = StringVar()
     def download(self):
         if(self.texto.get() == ""):
             self.resposta.set("Tens que usar url do vídeo que vais baixar!")
         else:
              YouTube(self.texto.get()).streams.first().download()
+             processo_final()
 
     #-----------------------------------
     # widgets
