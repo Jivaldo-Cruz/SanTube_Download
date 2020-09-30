@@ -4,7 +4,10 @@ try:
     from pytube import YouTube
 except ImportError:
     print("Biblioteca em falta")
-    os.system("pip3 install pytube")
+    if(os.name == "nt"):
+        os.system("pip3 install pytube")
+    else:
+        os.system("sudo pip3 install pytube")
 
 #-----------------------------------
 # GUI
